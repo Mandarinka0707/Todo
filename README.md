@@ -10,34 +10,6 @@
 
 База данных: **PostgreSQL**, ORM: **SQLAlchemy**, контейнеризация: **Docker + docker-compose**.
 
-## Запуск через Docker
-
-1. Установите Docker и Docker Compose.
-2. В корне проекта (`c:\Users\Katana\Desktop\Akutin\first`) выполните:
-
-```bash
-docker compose up --build
-```
-
-3. После старта контейнеров:
-   - API будет доступно по адресу: `http://localhost:8000`
-   - Документация Swagger: `http://localhost:8000/docs`
-
-## Подключение к базе
-
-По умолчанию используется строка подключения (через переменную окружения `DATABASE_URL` в `docker-compose.yml`):
-
-```text
-postgresql+psycopg2://warehouse:warehouse_password@db:5432/warehouse_db
-```
-
-Для локального запуска без Docker по умолчанию используется:
-
-```text
-postgresql+psycopg2://warehouse:warehouse_password@localhost:5432/warehouse_db
-```
-
-Вы можете заменить её через переменную окружения `DATABASE_URL`.
 
 ## Модель задачи (Todo)
 
@@ -104,22 +76,5 @@ postgresql+psycopg2://warehouse:warehouse_password@localhost:5432/warehouse_db
 }
 ```
 
-## Локальный запуск без Docker
 
-1. Установите Python 3.12.
-2. Создайте и активируйте виртуальное окружение (рекомендуется).
-3. Установите зависимости:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Запустите PostgreSQL локально и создайте базу `warehouse_db` с пользователем `warehouse/warehouse_password` (или измените `DATABASE_URL` через переменную окружения).
-5. Запустите приложение:
-
-```bash
-uvicorn app.main:app --reload
-```
-
-После этого API будет доступно на `http://localhost:8000`, а Swagger-документация – на `http://localhost:8000/docs`.
 
