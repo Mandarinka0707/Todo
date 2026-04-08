@@ -1,4 +1,3 @@
-# Python
 __pycache__/
 *.py[cod]
 *.pyo
@@ -13,12 +12,12 @@ env/
 .vscode/
 .DS_Store
 
-# Byte-compiled / logs
+
 *.log
 
 # Docker / compose
 *.pid
 
-# Env files (секреты, токены, пароли)
+
 .env
 

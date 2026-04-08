@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import health, todos
+from .routers import health, todos
 
 
 app = FastAPI(
