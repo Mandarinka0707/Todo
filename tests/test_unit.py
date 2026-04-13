@@ -10,6 +10,7 @@ from app.src.models import Todo
 client = TestClient(app)
 
 # Фикстура для создания объекта, имитирующего ответ из БД
+
 @pytest.fixture
 def mock_todo_obj():
     return Todo(
@@ -38,7 +39,7 @@ def test_create_todo_unit(mock_create_todo, mock_todo_obj):
     assert response.status_code == 201
     assert response.json()["title"] == "Тестовая задача"
     assert response.json()["id"] == 1
-    
+
     # Проверяем, что роутер действительно попытался вызвать функцию создания
     mock_create_todo.assert_called_once()
 
@@ -72,7 +73,7 @@ def test_get_todo_success(mock_get_todo, mock_todo_obj):
 def test_delete_todo_success(mock_get_todo, mock_delete_todo, mock_todo_obj):
     # Чтобы удалить, роутер сначала ищет задачу. Отдаем ему мок-задачу.
     mock_get_todo.return_value = mock_todo_obj
-    
+
     # Для удаления возвращать ничего не нужно (функция возвращает None)
     mock_delete_todo.return_value = None
 
@@ -82,6 +83,7 @@ def test_delete_todo_success(mock_get_todo, mock_delete_todo, mock_todo_obj):
     mock_get_todo.assert_called_once()
     mock_delete_todo.assert_called_once()
 
+
 def test_crud_delete_todo(mock_todo_obj):
 
     mock_db = MagicMock()
@@ -90,6 +92,7 @@ def test_crud_delete_todo(mock_todo_obj):
 
     mock_db.delete.assert_called_once_with(mock_todo_obj)
     mock_db.commit.assert_called_once()
+
 
 def test_crud_create_todo():
     mock_db = MagicMock()

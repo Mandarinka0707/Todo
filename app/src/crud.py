@@ -12,8 +12,10 @@ def get_todos(db: Session) -> List[models.Todo]:
     )
     return db.execute(stmt).scalars().all()
 
+
 def get_todo(db: Session, todo_id: int) -> Optional[models.Todo]:
     return db.get(models.Todo, todo_id)
+
 
 def create_todo(db: Session, todo_in: schemas.TodoCreate) -> models.Todo:
     todo = models.Todo(**todo_in.model_dump())
@@ -21,6 +23,7 @@ def create_todo(db: Session, todo_in: schemas.TodoCreate) -> models.Todo:
     db.commit()
     db.refresh(todo)
     return todo
+
 
 def update_todo(
     db: Session, todo: models.Todo, todo_in: schemas.TodoUpdate
@@ -31,6 +34,7 @@ def update_todo(
     db.commit()
     db.refresh(todo)
     return todo
+
 
 def delete_todo(db: Session, todo: models.Todo) -> None:
     db.delete(todo)
