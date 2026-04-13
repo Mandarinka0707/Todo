@@ -4,3 +4,8 @@ SQLAlchemy==2.0.35
 psycopg2-binary==2.9.9
 python-dotenv==1.0.1
 alembic==1.13.3
+# --- Добавлено для CI/CD ---
+pytest==8.0.0
+pytest-cov==4.1.0
+httpx==0.26.0
+flake8==7.0.0
