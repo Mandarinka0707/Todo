@@ -7,7 +7,7 @@
 
 ## Технологии
 * **Backend:** Python, FastAPI
-* **Database:** PostgreSQL, SQLAlchemy (ORM)
+* **Database:** PostgreSQL
 * **Контейнеризация:** Docker, Docker Compose
 
 ---
