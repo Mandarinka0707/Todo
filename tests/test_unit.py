@@ -6,6 +6,7 @@ from app.src import crud
 from app.src.main import app
 from app.src.models import Todo
 
+
 client = TestClient(app)
 
 # Фикстура для создания объекта, имитирующего ответ из БД
@@ -67,8 +68,6 @@ def test_get_todo_success(mock_get_todo, mock_todo_obj):
 
 
 @patch("app.src.routers.todos.crud.delete_todo")
-
-
 @patch("app.src.routers.todos.crud.get_todo")
 def test_delete_todo_success(mock_get_todo, mock_delete_todo, mock_todo_obj):
     # Чтобы удалить, роутер сначала ищет задачу. Отдаем ему мок-задачу.
@@ -103,4 +102,3 @@ def test_crud_create_todo():
     mock_db.add.assert_called_once()
     mock_db.commit.assert_called_once()
     mock_db.refresh.assert_called_once()
-    
