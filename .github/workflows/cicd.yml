@@ -94,7 +94,7 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/todo-app:latest
   deploy:
     runs-on: ubuntu-latest
-    needs: [lint, test, docker_build]
+    needs: docker_push
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
