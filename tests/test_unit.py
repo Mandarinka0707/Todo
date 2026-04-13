@@ -9,7 +9,6 @@ from app.src.models import Todo
 
 client = TestClient(app)
 
-# Фикстура для создания объекта, имитирующего ответ из БД
 
 @pytest.fixture
 def mock_todo_obj():
