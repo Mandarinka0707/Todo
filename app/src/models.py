@@ -1,8 +1,6 @@
 from datetime import datetime, date
-
 from sqlalchemy import Integer, String, Text, DateTime, Date
 from sqlalchemy.orm import Mapped, mapped_column
-
 from .db import Base
 
 
@@ -21,4 +19,3 @@ class Todo(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow
     )
-    
