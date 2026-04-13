@@ -41,4 +41,4 @@ def update_todo(
 def delete_todo(db: Session, todo: models.Todo) -> None:
     db.delete(todo)
     db.commit()
-
+    

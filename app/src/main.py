@@ -15,4 +15,3 @@ app = FastAPI(
 
 app.include_router(health.router)
 app.include_router(todos.router)
-

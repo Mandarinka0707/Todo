@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, MagicMock
 from fastapi.testclient import TestClient
 from datetime import datetime
-
+from app.src import crud
 from app.src.main import app
 from app.src.models import Todo
 
@@ -21,9 +21,6 @@ def mock_todo_obj():
         updated_at=datetime.utcnow()
     )
 
-
-### 1. Тесты для роутеров (контроллеров) с подменой CRUD-операций ###
-# Это аналог того, что делал ваш одногруппник (describe('createProduct'))
 
 @patch("app.src.routers.todos.crud.create_todo")
 def test_create_todo_unit(mock_create_todo, mock_todo_obj):
@@ -70,6 +67,8 @@ def test_get_todo_success(mock_get_todo, mock_todo_obj):
 
 
 @patch("app.src.routers.todos.crud.delete_todo")
+
+
 @patch("app.src.routers.todos.crud.get_todo")
 def test_delete_todo_success(mock_get_todo, mock_delete_todo, mock_todo_obj):
     # Чтобы удалить, роутер сначала ищет задачу. Отдаем ему мок-задачу.
@@ -84,36 +83,24 @@ def test_delete_todo_success(mock_get_todo, mock_delete_todo, mock_todo_obj):
     mock_get_todo.assert_called_once()
     mock_delete_todo.assert_called_once()
 
-
-### 2. Юнит-тесты непосредственно логики работы с БД (CRUD) ###
-# Здесь мы вообще не запускаем FastAPI, а просто тестируем функции из crud.py,
-# подменяя объект сессии базы данных (db: Session)
-
-from app.src import crud
-
 def test_crud_delete_todo(mock_todo_obj):
-    # Создаем фиктивную сессию БД
+
     mock_db = MagicMock()
 
-    # Вызываем нашу функцию
     crud.delete_todo(mock_db, mock_todo_obj)
 
-    # Проверяем, что наша функция правильно дергает методы SQLAlchemy
     mock_db.delete.assert_called_once_with(mock_todo_obj)
     mock_db.commit.assert_called_once()
-
 
 def test_crud_create_todo():
     mock_db = MagicMock()
     from app.src.schemas import TodoCreate
     todo_in = TodoCreate(title="Новая", priority=2)
 
-    # Вызываем функцию
     result = crud.create_todo(mock_db, todo_in)
-
-    # Проверяем, что вернулся объект модели и дернулись нужные методы алхимии
     assert isinstance(result, Todo)
     assert result.title == "Новая"
     mock_db.add.assert_called_once()
     mock_db.commit.assert_called_once()
     mock_db.refresh.assert_called_once()
+    

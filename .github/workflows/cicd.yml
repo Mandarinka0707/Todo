@@ -43,6 +43,7 @@ jobs:
     env:
       # Заглушка, чтобы db.py не падал при импорте. Реально тесты используют SQLite.
       DATABASE_URL: "sqlite:///./test.db"
+      PYTHONPATH: "."
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python

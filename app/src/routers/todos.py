@@ -41,4 +41,4 @@ def delete_todo(todo_id: int, db: Session = Depends(get_db)):
     if not todo:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found")
     crud.delete_todo(db, todo)
-
+    
