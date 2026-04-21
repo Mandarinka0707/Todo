@@ -25,27 +25,23 @@ def mock_todo_obj():
 
 @patch("app.src.routers.todos.crud.create_todo")
 def test_create_todo_unit(mock_create_todo, mock_todo_obj):
-    # Говорим моку: когда тебя вызовут, верни вот этот заранее заготовленный объект
+    
     mock_create_todo.return_value = mock_todo_obj
 
-    # Делаем запрос к API
     response = client.post(
         "/api/todos",
         json={"title": "Тестовая задача", "description": "Описание задачи", "priority": 1}
     )
 
-    # Проверки
     assert response.status_code == 201
     assert response.json()["title"] == "Тестовая задача"
     assert response.json()["id"] == 1
 
-    # Проверяем, что роутер действительно попытался вызвать функцию создания
     mock_create_todo.assert_called_once()
 
 
 @patch("app.src.routers.todos.crud.get_todo")
 def test_get_todo_not_found(mock_get_todo):
-    # Говорим моку: верни None, будто в базе нет такой записи (аналог db.query.mockResolvedValue({ rows: [] }))
     mock_get_todo.return_value = None
 
     response = client.get("/api/todos/999")
@@ -57,7 +53,6 @@ def test_get_todo_not_found(mock_get_todo):
 
 @patch("app.src.routers.todos.crud.get_todo")
 def test_get_todo_success(mock_get_todo, mock_todo_obj):
-    # Имитируем успешное нахождение записи
     mock_get_todo.return_value = mock_todo_obj
 
     response = client.get("/api/todos/1")
@@ -70,10 +65,8 @@ def test_get_todo_success(mock_get_todo, mock_todo_obj):
 @patch("app.src.routers.todos.crud.delete_todo")
 @patch("app.src.routers.todos.crud.get_todo")
 def test_delete_todo_success(mock_get_todo, mock_delete_todo, mock_todo_obj):
-    # Чтобы удалить, роутер сначала ищет задачу. Отдаем ему мок-задачу.
     mock_get_todo.return_value = mock_todo_obj
 
-    # Для удаления возвращать ничего не нужно (функция возвращает None)
     mock_delete_todo.return_value = None
 
     response = client.delete("/api/todos/1")
