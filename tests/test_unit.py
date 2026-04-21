@@ -25,7 +25,6 @@ def mock_todo_obj():
 
 @patch("app.src.routers.todos.crud.create_todo")
 def test_create_todo_unit(mock_create_todo, mock_todo_obj):
-    
     mock_create_todo.return_value = mock_todo_obj
 
     response = client.post(
